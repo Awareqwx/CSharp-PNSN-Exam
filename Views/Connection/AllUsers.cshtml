@@ -1,0 +1,32 @@
+@using System.Linq;
+@using ProfessionalNetwork.Models;
+@{
+    ViewData["Title"] = "Professional Profile";
+}
+@model User
+<link rel="stylesheet" href="~/css/profile.css" />
+<div id="header">
+    <h2 class="inlineblock">Users you may want to connect with:</h2>
+    <span class="floatright"><a href="/professional_profile">Your Profile</a> | <a href="/logout">Logout</a></span>
+</div>
+<div class="blackborder">
+    @if(ViewBag.ShowUsers.Count == 0)
+    {
+        <h4>There are no users to connect with</h4>
+    }
+    else
+    {
+        <table>
+        <tr>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+        @foreach(User user in ViewBag.ShowUsers){
+            <tr>
+                <td><a href="/users/@user.UserId">@user.Name</a></td>
+                <td><a href="/connect/@user.UserId">Connect</a></td>
+            </tr>
+        }
+        </table>
+    }
+</div>

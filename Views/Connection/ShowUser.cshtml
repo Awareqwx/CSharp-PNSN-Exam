@@ -1,0 +1,11 @@
+@using System.Linq;
+@using ProfessionalNetwork.Models;
+@model User
+@{
+    ViewData["Title"] = Model.Name;
+}
+<div id="header">
+    <h2 class="inlineblock">@Model.Name</h2>
+    <span class="floatright"><a href="/professional_profile">Your Profile</a> | <a href="/logout">Logout</a></span>
+</div>
+<p>Description: @Model.Description</p>

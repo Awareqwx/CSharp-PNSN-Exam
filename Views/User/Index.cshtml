@@ -1,0 +1,48 @@
+@{
+    ViewData["Title"] = "Login/Register";
+    
+    try
+    {
+        Console.WriteLine(ViewBag.LoginError.Equals(null));
+        // Explanaton: Apparently, if the value of ViewBag.errors is null, you have to use
+        // the "==" operator to compare it or it will crash. But if it is NOT null, then you 
+        // have to use .Equals() to compare it, or it will crash. So... Here's my super-hacky
+        // solution to the problem. If it crashes on that line, well, then that means it
+        // is null, because if it WASN'T null, then it wouldn't have crashed.
+    }
+    catch(Exception e)
+    {
+        ViewBag.LoginError = "";
+    } 
+}
+@model ProfessionalNetwork.Models.ViewUser
+
+<h1>Welcome!</h1>
+
+<form asp-controller="User" asp-action="Register" method="post">
+    <h3>Register</h3>
+    <span asp-validation-for="Name"></span>
+    <label asp-for="Name"></label>
+    <input asp-for="Name"/><br/>
+    <span asp-validation-for="Email"></span>
+    <label asp-for="Email"></label>
+    <input asp-for="Email"/><br/>
+    <span asp-validation-for="Password"></span>
+    <label asp-for="Password"></label>
+    <input asp-for="Password"/><br/>
+    <span asp-validation-for="PasswordConf"></span>
+    <label asp-for="PasswordConf"></label>
+    <input asp-for="PasswordConf"/><br/>
+    <span asp-validation-for="Description"></span>
+    <label asp-for="Description"></label>
+    <textarea name="Description"></textarea><br/>
+    <input type="submit" value="Register">
+</form>
+
+<form action="/login" method="post">
+<h3>Login</h3>
+    <span class="field-validation-error">@ViewBag.LoginError</span>
+    <label for="email">Email: <input type="text" name="email"></label><br/>
+    <label for="password">Password: <input type="password" name="password"></label><br/>
+    <input type="Submit" value="Login">
+</form>

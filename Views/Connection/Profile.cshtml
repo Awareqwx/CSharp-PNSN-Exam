@@ -1,0 +1,84 @@
+@using System.Linq;
+@using ProfessionalNetwork.Models;
+@{
+    ViewData["Title"] = "Professional Profile";
+}
+@model User
+<link rel="stylesheet" href="~/css/profile.css" />
+<div id="header">
+    <h1 class="inlineblock">Hello, @Model.Name</h1>
+    <span class="floatright"><a href="/users">All Users</a> | <a href="/logout">Logout</a></span>
+</div>
+<h4>Here is your user profile:</h4>
+<p class="blackborder">
+    @Model.Description
+</p>
+
+<h4>Your Professional Network:</h4>
+<div class="blackborder">
+    @if(Model.ConnectedTo.Where(conn => conn.Accepted == 1).Count() == 0 && Model.ConnectedBy.Where(conn => conn.Accepted == 1).Count() == 0)
+    {
+        <p>You haven't connected with anyone yet.</p>
+    }
+    else
+    {
+        <ul>
+            @foreach(Connection conn in Model.ConnectedTo.Where(conn => conn.Accepted == 1))
+            {
+                <li><a href="/users/@conn.ConnectedToId">@conn.ConnectedTo.Name</a></li>
+            }
+            @foreach(Connection conn in Model.ConnectedBy.Where(conn => conn.Accepted == 1))
+            {
+                <li><a href="/users/@conn.ConnectorId">@conn.Connector.Name</a></li>
+            }
+        </ul>
+    }
+</div>
+
+<h4 class="inv">Invitations</h4>
+<h5>The following people asked you to be in their network:</h5>
+<div class="blackborder">
+    @if(Model.ConnectedBy.Where(conn => conn.Accepted == 0).ToList().Count() == 0)
+    {
+        <p>You haven't recieved any invitations yet.</p>
+    }
+    else
+    {
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Action</th>
+            </tr>
+            @foreach(Connection conn in Model.ConnectedBy.Where(conn => conn.Accepted == 0).ToList())
+            {
+                <tr>
+                    <td><a href="/users/@conn.ConnectorId">@conn.Connector.Name</a></td>
+                    <td><a href="/accept/@conn.ConnectionId">Accept</a> | <a href="/ignore/@conn.ConnectionId">Ignore</a></td>
+                </tr>
+            }
+        </table>
+    }
+</div>
+
+<h4 class="inv">Pending Invites</h4>
+<h5>You asked the following people to be in your network:</h5>
+<div class="blackborder">
+    @if(Model.ConnectedTo.Where(conn => conn.Accepted == 0).ToList().Count() == 0)
+    {
+        <p>You haven't recieved any invitations yet.</p>
+    }
+    else
+    {
+        <table>
+            <tr>
+                <th>Name</th>
+            </tr>
+            @foreach(Connection conn in Model.ConnectedTo.Where(conn => conn.Accepted == 0).ToList())
+            {
+                <tr>
+                    <td><a href="/users/@conn.ConnectedToId">@conn.ConnectedTo.Name</a></td>
+                </tr>
+            }
+        </table>
+    }
+</div>

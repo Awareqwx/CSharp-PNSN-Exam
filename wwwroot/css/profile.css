@@ -1,0 +1,19 @@
+.blackborder{
+    border: 2px solid black;
+    display: inline-block;
+    width: 400px;
+    padding: 5px;
+    text-align: center;
+}
+
+table{
+    display: inline-block;
+}
+
+.inv{
+    margin-bottom: 5px;
+}
+
+h5{
+    margin: 5px 0;
+}
