@@ -135,6 +135,20 @@ namespace ProfessionalNetwork.Controllers
         }
 
         [HttpGet]
+        [Route("/cancel/{id}")]
+        public IActionResult Cancel(int id)
+        {
+            return Redirect("/ignore/" + id);
+        }
+
+        [HttpGet]
+        [Route("/remove/{id}")]
+        public IActionResult Remove(int id)
+        {
+            return Redirect("/ignore/" + id);
+        }
+
+        [HttpGet]
         [Route("/ignore/{id}")]
         public IActionResult Ignore(int id)
         {
@@ -147,7 +161,7 @@ namespace ProfessionalNetwork.Controllers
             {
                 return RedirectToAction("Profile");
             }
-            if(connect.ConnectedToId != (int)HttpContext.Session.GetInt32("currUser"))
+            if(connect.ConnectedToId != (int)HttpContext.Session.GetInt32("currUser") && connect.ConnectorId != (int)HttpContext.Session.GetInt32("currUser"))
             {
                 return RedirectToAction("Profile");
             }

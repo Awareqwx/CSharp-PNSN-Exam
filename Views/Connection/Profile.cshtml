@@ -25,11 +25,11 @@
         <ul>
             @foreach(Connection conn in Model.ConnectedTo.Where(conn => conn.Accepted == 1))
             {
-                <li><a href="/users/@conn.ConnectedToId">@conn.ConnectedTo.Name</a></li>
+                <li><a href="/users/@conn.ConnectedToId">@conn.ConnectedTo.Name</a> - <a href="/remove/@conn.ConnectionId">Remove</a></li>
             }
             @foreach(Connection conn in Model.ConnectedBy.Where(conn => conn.Accepted == 1))
             {
-                <li><a href="/users/@conn.ConnectorId">@conn.Connector.Name</a></li>
+                <li><a href="/users/@conn.ConnectorId">@conn.Connector.Name</a> - <a href="/remove/@conn.ConnectionId">Remove</a></li>
             }
         </ul>
     }
@@ -72,11 +72,13 @@
         <table>
             <tr>
                 <th>Name</th>
+                <th>Action</th>
             </tr>
             @foreach(Connection conn in Model.ConnectedTo.Where(conn => conn.Accepted == 0).ToList())
             {
                 <tr>
                     <td><a href="/users/@conn.ConnectedToId">@conn.ConnectedTo.Name</a></td>
+                    <td><a href="/cancel/@conn.ConnectionId">Cancel</a></td>
                 </tr>
             }
         </table>
